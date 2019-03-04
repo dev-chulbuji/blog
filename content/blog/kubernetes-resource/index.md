@@ -1,5 +1,5 @@
 ---
-title: Kubernetes #2 resource
+title: Kubernetes resource
 date: "2018-12-23"
 description: k8s resource pod, service, namespace, configMap & secret
 ---

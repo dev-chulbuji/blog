@@ -1,5 +1,5 @@
 ---
-title: kubernetes #1 component
+title: kubernetes component
 date: "2018-12-22"
 description: k8s component master & worker node
 ---
