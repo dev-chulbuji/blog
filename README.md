@@ -8,11 +8,11 @@
   Chulbuji's dev blog
 </h1>
 
-## 🎓 TODO
+### 🎓 TODO
 
 TIL로 공부한 것을 시간내서 꼼꼼하게 정리합니다.
 
-## 💫 Deploy
+### 💫 Deploy
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/sites/brave-bhabha-55b79e/deploys)
 
