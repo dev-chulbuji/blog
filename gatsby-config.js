@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `DEV blog`,
+    title: `dev blog`,
     author: `DJ Kim`,
     description: `dev blog`,
     siteUrl: `https://chulbuji.gq/`,
@@ -57,8 +57,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `Dev chulbuji blog`,
+        short_name: `chulbuji`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
