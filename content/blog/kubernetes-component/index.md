@@ -24,7 +24,7 @@ container cluster를 운영하면서 필요한 여러 기술들을 추상화된 
 
 ### # kubernetes architecture
 
-![kubernetes architecture](https://cdn-images-1.medium.com/max/NaN/0*parN9vK2eBPFlgUy)*kubernetes architecture*
+![kubernetes architecture](https://cdn-images-1.medium.com/max/800/0*parN9vK2eBPFlgUy)*kubernetes architecture*
 
 ### # kubernetes component
 
@@ -34,7 +34,7 @@ kubernetes는 크게 master node와 nod( worker node, minion ) 2개로 나뉜다
 
 master node는 cluster control tower로 cluster를 관리하고 설정 환경을 저장하는 역할을 한다.
 
-![kubernetes master node component](https://cdn-images-1.medium.com/max/NaN/1*oQkc9gI69u4TNZqyekCwiw.png)*kubernetes master node component*
+![kubernetes master node component](https://cdn-images-1.medium.com/max/800/1*oQkc9gI69u4TNZqyekCwiw.png)*kubernetes master node component*
 
 사진 설명을 입력하세요.
 
@@ -42,13 +42,13 @@ master node는 api server, scheduler, etcd, controller manager 총 4개의 요�
 
 ### ### kubernetes master node — api server
 
-![kubernetes master node api server](https://cdn-images-1.medium.com/max/NaN/1*E7a2ZT3UlURRVfVpd_PVZA.png)*kubernetes master node api server*
+![kubernetes master node api server](https://cdn-images-1.medium.com/max/800/1*E7a2ZT3UlURRVfVpd_PVZA.png)*kubernetes master node api server*
 
 master node의 api sever는 kubernetes rest api 제공하는 역할을 하며 kubernetes cli 도구인 kubectl로 들어오는 명령과 rest api call에 의한 request를 받아서 worker node(kublet)들에게 req를 전달하는 역할을 한다.
 
 ### ### kubernetes master node — scheduler
 
-![kubernetes master node scheduler](https://cdn-images-1.medium.com/max/NaN/1*krZiYgzISJqLNWSVTWpRVw.png)*kubernetes master node scheduler*
+![kubernetes master node scheduler](https://cdn-images-1.medium.com/max/800/1*krZiYgzISJqLNWSVTWpRVw.png)*kubernetes master node scheduler*
 
 scheduler는 말 그대로 kubernetes의 가장 최소 배포 단위인 pod들을 어떤 worker node에 배치할지를 책임지는 역할을 한다.
 
@@ -56,13 +56,13 @@ scheduler는 말 그대로 kubernetes의 가장 최소 배포 단위인 pod들�
 
 ### ### kubernetes master node — etcd
 
-![kubernetes master node etcd](https://cdn-images-1.medium.com/max/NaN/1*ANx979KuseQsivNZv-FcwQ.png)*kubernetes master node etcd*
+![kubernetes master node etcd](https://cdn-images-1.medium.com/max/800/1*ANx979KuseQsivNZv-FcwQ.png)*kubernetes master node etcd*
 
 kubernetes는 cluster의 모든 정보를 고가용성의 분산 key-value store인 etcd에 저장을 한다.
 
 ### ### kubernetes master node — controller manager
 
-![kubernetes master node controller manager](https://cdn-images-1.medium.com/max/NaN/1*WrNYta1830DfkJ5JFYmVUQ.png)*kubernetes master node controller manager*
+![kubernetes master node controller manager](https://cdn-images-1.medium.com/max/800/1*WrNYta1830DfkJ5JFYmVUQ.png)*kubernetes master node controller manager*
 
 controller manager는 control loop를 도는 controller들을 구동하는 관리자 역할을 담당하며 ontrol loop란 system의 상태와 상관없이 무한히 loop를 돌며 api server를 통해 etcd에 저장되어 있는 cluster 상태(desired 한 상태)를 유지하는 역활을 한다
 
@@ -76,7 +76,7 @@ Service Account & Token controller: kubernetes의 논리적 단위인 namespace�
 
 ### ### kubernetes master node — cloud controller manager
 
-![kubernetes master node cloud controller manager](https://cdn-images-1.medium.com/max/NaN/0*3txDsz6iFjaguSzt)*kubernetes master node cloud controller manager*
+![kubernetes master node cloud controller manager](https://cdn-images-1.medium.com/max/800/0*3txDsz6iFjaguSzt)*kubernetes master node cloud controller manager*
 
 cloud controller manager이란 기존에 controller manager에 있던 cloud 벤더사에 디펜던시가 있던 부분이 버전 1.6부터 빠져나온 개념이다.
 
@@ -84,24 +84,24 @@ cloud controller manager이란 기존에 controller manager에 있던 cloud 벤�
 
 ### ## k8s node ( worker node, minion )
 
-![kubernetes node component](https://cdn-images-1.medium.com/max/NaN/1*bR7T6SUfzdJOoOxvke8y9A.png)*kubernetes node component*
+![kubernetes node component](https://cdn-images-1.medium.com/max/800/1*bR7T6SUfzdJOoOxvke8y9A.png)*kubernetes node component*
 
 node는 실제 work load가 올라가는 부분으로 pod들을 관리하고 kubernetes 실행 환경을 제공한다.
 
 ### ### kubernetes node — kublet
 
-![kubernetes node kublet](https://cdn-images-1.medium.com/max/NaN/1*JJj_wfZ6tdlsi_icVxl7EA.png)*kubernetes node kublet*
+![kubernetes node kublet](https://cdn-images-1.medium.com/max/800/1*JJj_wfZ6tdlsi_icVxl7EA.png)*kubernetes node kublet*
 
 kublet은 agent로 master node의 api server와 통신하며 전달받은 명령을 처리하고 node의 상태를 master node에 전달하는 역할로 node 내의 pod들, pod 내의 여러 container들을 관리한다
 
 ### ### kubernetes node — kube proxy
 
-![kubernetes node kube proxy](https://cdn-images-1.medium.com/max/NaN/1*Pn2LqZ-Svtbmxpey2HA0hA.png)*kubernetes node kube proxy*
+![kubernetes node kube proxy](https://cdn-images-1.medium.com/max/800/1*Pn2LqZ-Svtbmxpey2HA0hA.png)*kubernetes node kube proxy*
 
 일종의 proxy 역할로 사용자의 요청이 왔을 때 그에 맞는 pod들을 service discovery pattern으로 찾아 proxy 해준다. kube proxy를 통해 host의 네트웍 rule을 추상화해 kubernetes의 service란 개념으로 loadbalancing이 가능하다.
 
 ### ### kubernetes node — container runtime
 
-![kubernetes node container runtime](https://cdn-images-1.medium.com/max/NaN/1*fR9ajqa2u-2caObU1T1YVQ.png)*kubernetes node container runtime*
+![kubernetes node container runtime](https://cdn-images-1.medium.com/max/800/1*fR9ajqa2u-2caObU1T1YVQ.png)*kubernetes node container runtime*
 
 docker가 아닌 다른 선택지들도 있지만 쉽게 docker(linux container 환경)를 구동할 수 있는 환경을 제공한다고 생각하면 쉽게 이해할 수 있다.
