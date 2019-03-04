@@ -38,10 +38,10 @@ function Bio() {
               }}
             />
             <p>
-              DevOps en
+              DevOps engineer
               {` `}
-              <a href={`https://github.com/${social.github}`}>
-                You should follow him on Github
+              <a target="_blank" href={`https://github.com/${social.github}`}>
+                Github account
               </a>
             </p>
           </div>
