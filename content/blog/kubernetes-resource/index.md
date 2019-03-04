@@ -1,7 +1,7 @@
 ---
-title: New Beginnings
+title: Kubernetes #2 resource
 date: "2018-12-23"
-description: k8s resource :: pod, service, namespace, configMap & secret
+description: k8s resource pod, service, namespace, configMap & secret
 ---
 
 # kubernetes #2 pod, service, namespace, configMap & secret
