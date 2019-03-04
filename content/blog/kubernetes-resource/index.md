@@ -4,7 +4,7 @@ date: "2018-12-23"
 description: k8s resource pod, service, namespace, configMap & secret
 ---
 
-# kubernetes #2 pod, service, namespace, configMap & secret
+## kubernetes #2 pod, service, namespace, configMap & secret
 
 kubernetes의 resource들은 다양한 방법으로 생성 할 수 있다.
 

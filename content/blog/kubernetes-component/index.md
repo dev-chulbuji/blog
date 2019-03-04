@@ -4,7 +4,7 @@ date: "2018-12-22"
 description: k8s component master & worker node
 ---
 
-# kubernetes #1 component
+## kubernetes #1 component
 
 kuberernetes는 linux container cluster를 하나의 단일 시스템으로 관리하여 운영 관리 이슈를 줄여 개발에 더욱 집중할 수 있는 docker orchestration의 하나로 구글의 수많은 머신 클러스터를 관리하는 borg라는 프로젝트에서 파생된 오픈소스 프로젝트이다.
 
