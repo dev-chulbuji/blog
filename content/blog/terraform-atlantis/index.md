@@ -1,17 +1,18 @@
 ---
 title: Atlantis
-date: "2018-03-08"
+date: "2019-03-08"
 description: Tool to automatically plan & apply Terraform in conjunction with Git pull request in GitHub, GitLab, BitBucket
 ---
 
 # Atlantis
 - [github](https://github.com/runatlantis/atlantis), [main site](https://www.runatlantis.io/)
 
-Atlantis는 pull request를 hooking해서 terraform plan 결과를 pr comment로 남겨주는 소프트웨어이다.
+Atlantis는 pull request 기반으로 terraform plan 결과를 comment로 남겨주거나 지정한 설정으로 plan 및 apply까지 해주는 협업에 도움을 주는 소프트웨어이다. 
 블로그의 첫글을 읽어보니 atlantis 개발자분이 hashicorp에 입사해 atlantis와 terraform이 더 협력 할 수 있는 프로젝트를 진행한다는 사실을 알게 되었다.
 atlantis는 사실 삼성전자의 송주영 선임분께서 aws 소모임에서 삼성전자 devops팀 이야기를 하실 때 처음 들었고, lightning talk시간에 terraform 협업 관련해서 이것저것 조언을 구하다가 소개 받은 툴이다.
-말 그대로 pull request를 hooking해 마치 자동 빌드 테스트 형태로 terraform plan을 해주고 결과를 pr comment로 보여주면서 reviewer가 직접 plan 결과를 실행하지 않고 바로 확인 할 수 있도록 해준다. IaaC 자체가 인프라 직접적으로 영향을 주는 것이므로 특히 협업을 할 때 고려해야 할 부분이 많이 있다.
-terraform내에서 지원하는 tfstate를 remote backend([hashicorp free remote state subscribe](https://app.terraform.io/signup) or s3, consul, ..)에서 관리하는 것 뿐만 아니라 나음의 staging전략을 사용 할 수 있는 workspace를 활용하는 것 dynamoDB등을 이용해 locking을 하는 것 그리고 terraform-docs를 활용한 문서화, 마지막으로 atlantis를 활용해 code review를 좀 더 편하게 할 수 있는 것들이 있을 것 같다.
+말 그대로 pull request를 hooking해 마치 자동 빌드 테스트 형태로 terraform plan을 해주고 결과를 pr comment로 보여주면서 reviewer가 직접 plan 결과를 실행하지 않고 바로 확인 할 수 있도록 해준다. 뿐만아니라 automerge 설정을 하면 모든 plan이 통과 됬을 때 자동으로 pr을 merge하는 기능도 있다.
+IaaC 자체가 인프라 직접적으로 영향을 주는 것이므로 특히 협업을 할 때 고려해야 할 부분이 많이 있다.
+terraform내에서 지원하는 tfstate를 remote backend([hashicorp free remote state subscribe](https://app.terraform.io/signup) or s3, consul, ..)에서 관리하는 것 뿐만 아니라 나름의 staging전략을 사용 할 수 있는 workspace를 활용하는 것 dynamoDB등을 이용해 locking을 하는 것 그리고 terraform-docs를 활용한 문서화, 마지막으로 atlantis를 활용해 code review를 좀 더 편하게 하고 atlantis단에서의 locking도 활용해 보는 것들이 있을 것 같다.
 
 ## how atlantis works :: locking, plan, merge
 atlantis에 의해 pull request로 plan이 이뤄지면 같은 directory, workspace는 pr이 merge 되거나 plan을 manually하게 삭제되지 않는 이상 lock에 걸리게 된다.
@@ -22,9 +23,7 @@ atlantis는 기본적으로 apply가 실패 할 수 있을 것을 감안해 merg
 atlantis는 pull request가 생성되거나 기존의 pr에 새로운 commit이 생겼을 경우 default로는 .tf 파일들만 filter한 후 파일이 위치한 경로에서 plan을 하는데 하위 dir level의 module이 변경 됬을 경우 상위 dir level로 이동하여 plan을 해준다.
 이런 atlantis동작을 atlantis.yaml 설정을 통해 customizing 할 수 있다. 그건 아래에서 좀 더 자세하게 살펴보겠다.
 
-
-
-
+atlantis는 모든 plan이 통과된다면 자동으로 pr을 merge 할 수 있는데 atlantis.yaml의 automerge값을 true 주거나 atlantis server 실행 시 ```--automerge``` option을 주면 된다.
 
 ## support git host list
   - github
