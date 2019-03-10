@@ -1,7 +1,7 @@
 ---
-title: Atlantis
+title: Terraform co-working tool :: Atlantis
 date: "2019-03-08"
-description: Tool to automatically plan & apply Terraform in conjunction with Git pull request in GitHub, GitLab, BitBucket
+description: tool to automatically plan & apply Terraform in conjunction with Git pull request in GitHub, GitLab, BitBucket
 ---
 
 # Atlantis
@@ -18,7 +18,7 @@ terraform내에서 지원하는 tfstate를 remote backend([hashicorp free remote
 atlantis에 의해 pull request로 plan이 이뤄지면 같은 directory, workspace는 pr이 merge 되거나 plan을 manually하게 삭제되지 않는 이상 lock에 걸리게 된다.
 atlantis는 기본적으로 apply가 실패 할 수 있을 것을 감안해 merge전에 apply를 실행하는데 master branch관점에서 봤을 때 locking을 통해 pr이 merge되기전 (project기준이 아닌 directory기준)최신 상태를 유지하도록 한다.  
 만약 다른 pr에 의해 lock이 걸려있는 경우 다음과 같은 에러를 pr comment로 남겨준다.
-![atlantis lock](./images/terraform_lock.png)* the directory and Terraform workspace are Locked*
+![atlantis lock](./images/terraform_lock.png)
 
 atlantis는 pull request가 생성되거나 기존의 pr에 새로운 commit이 생겼을 경우 default로는 .tf 파일들만 filter한 후 파일이 위치한 경로에서 plan을 하는데 하위 dir level의 module이 변경 됬을 경우 상위 dir level로 이동하여 plan을 해준다.
 이런 atlantis동작을 atlantis.yaml 설정을 통해 customizing 할 수 있다. 그건 아래에서 좀 더 자세하게 살펴보겠다.
@@ -116,7 +116,7 @@ workflows:
 ```
 
 ### atlantis.yaml :: automerge
-automerge는 terraform plan이 applied 됬을 때 자동 머지하는 기능이다.
+automerge는 새로운 pr이나 기존의 pr에 새로운 commit이 있을 시 모든 plan이 통과 됬을 때 자동 머지하는 기능이다.
 
 ### atlantis.yaml :: projects
 atlantis.yaml을 통해 project라는 단위로 리소스 별 혹은 staging별 folder 구조를 나눌 수 있다.
