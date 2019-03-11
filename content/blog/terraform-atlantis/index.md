@@ -1,5 +1,5 @@
 ---
-title: Terraform co-working tool :: Atlantis
+title: Terraform co-working tool - Atlantis
 date: "2019-03-08"
 description: tool to automatically plan & apply Terraform in conjunction with Git pull request in GitHub, GitLab, BitBucket
 ---
