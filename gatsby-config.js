@@ -54,7 +54,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-feed`,
-    {
+  {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Dev chulbuji blog`,
@@ -74,5 +74,15 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
+    {
+      resolve: `gatsby-remark-prismjs`,
+      options: {
+        classPrefix: "language-",
+        inlineCodeMarker: null,
+        aliases: {},
+        showLineNumbers: false,
+        noInlineHighlight: false,
+      },
+    }
   ],
 }
