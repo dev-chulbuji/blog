@@ -40,7 +40,7 @@ function Bio() {
             <p>
               DevOps engineer
               {` `}
-              <a target="_blank" href={`https://github.com/${social.github}`}>
+              <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${social.github}`}>
                 Github account
               </a>
             </p>
