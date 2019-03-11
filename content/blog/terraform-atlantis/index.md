@@ -42,14 +42,17 @@ atlantis는 다음의 git host를 지원한다.
 
 ## quick start
 ---
-atlantis 설치 :: https://github.com/runatlantis/atlantis/releases 에서 최신 버전을 확인한다.
+
 ```sh
+// atlantis 설치 :: https://github.com/runatlantis/atlantis/releases 에서 최신 버전을 확인한다.
+
 $ wget "https://github.com/runatlantis/atlantis/releases/download/v0.5.0/atlantis_darwin_amd64.zip"
 $ unzip atlantis_darwin_am64.zip -d /usr/local/bin
 ```
 
-ngrok 설치 & 실행
-```sj
+```sh
+// ngrok 설치 & 실행
+
 $ wget "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-darwin-amd64.zip"
 $ unzip ngrok-stable-darwin-am64.zip
 
@@ -57,13 +60,15 @@ $ ngrok http 4141
 $ export URL="https://{YOUR_HOSTNAME}.ngrok.io"
 ```
 
-github webhook secret :: http://www.unit-conversion.info/texttools/random-string-generator/
 ```sh
+// github webhook secret :: http://www.unit-conversion.info/texttools/random-string-generator/
+
 $ export SECRET="{YOUR_RANDOM_STRING}"
 ```
 
-add github webhook 
 ```sh
+// add github webhook 
+
 - Go to your repo settings
 - Select Webhooks or Hooks in the sidebar
 - Click Add webhook
@@ -81,13 +86,15 @@ add github webhook
 - click Add webhook
 ```
 
-create access token :: https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line#creating-a-token
 ```sh
+// create access token :: https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line#creating-a-token
+
 $ export TOKEN="{YOUR_TOKEN}"
 ```
 
-start atlantis
 ```sh
+// start atlantis
+
 export USERNAME="{the username of your GitHub}" // ex: dev-chulbuji
 export REPO_WHITELIST="$YOUR_GIT_HOST/$YOUR_USERNAME/$YOUR_REPO" // ex: github/dev-chulbuji/infra
 $ atlantis server \
