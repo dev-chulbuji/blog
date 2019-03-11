@@ -41,23 +41,34 @@ atlantis는 다음의 git host를 지원한다.
 - git host account & repo
 
 ## quick start
+---
+
 ```sh
 // atlantis 설치 :: https://github.com/runatlantis/atlantis/releases 에서 최신 버전을 확인한다.
+
 $ wget "https://github.com/runatlantis/atlantis/releases/download/v0.5.0/atlantis_darwin_amd64.zip"
 $ unzip atlantis_darwin_am64.zip -d /usr/local/bin
+```
 
-// ngrok 설치
+```sh
+// ngrok 설치 & 실행
+
 $ wget "https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-darwin-amd64.zip"
 $ unzip ngrok-stable-darwin-am64.zip
 
-// ngrok host name
 $ ngrok http 4141
 $ export URL="https://{YOUR_HOSTNAME}.ngrok.io"
+```
 
+```sh
 // github webhook secret :: http://www.unit-conversion.info/texttools/random-string-generator/
-$ export SECRET="{YOUR_RANDOM_STRING}"
 
-// add webhook 
+$ export SECRET="{YOUR_RANDOM_STRING}"
+```
+
+```sh
+// add github webhook 
+
 - Go to your repo settings
 - Select Webhooks or Hooks in the sidebar
 - Click Add webhook
@@ -73,11 +84,17 @@ $ export SECRET="{YOUR_RANDOM_STRING}"
   - Pull requests
 - leave Active checked
 - click Add webhook
+```
 
+```sh
 // create access token :: https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line#creating-a-token
-$ export TOKEN="{YOUR_TOKEN}"
 
+$ export TOKEN="{YOUR_TOKEN}"
+```
+
+```sh
 // start atlantis
+
 export USERNAME="{the username of your GitHub}" // ex: dev-chulbuji
 export REPO_WHITELIST="$YOUR_GIT_HOST/$YOUR_USERNAME/$YOUR_REPO" // ex: github/dev-chulbuji/infra
 $ atlantis server \
@@ -87,6 +104,9 @@ $ atlantis server \
   --gh-webhook-secret="$SECRET" \
   --repo-whitelist="$REPO_WHITELIST"
 ```
+---
+
+
 
 ## atlantis.yaml
 atlantis 기본동작은 설정 할 수 있는 파일이다. v2부터는 project root에 위치 시켜 v1과는 다르게 project 단위로 나누어 설정한다.
