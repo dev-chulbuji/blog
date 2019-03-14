@@ -11,9 +11,9 @@ terraform에서 다른 infrastructure 환경을 코드로 관리할 때 보통 �
         ├── dev
         └── prod
 ```
-이럴 수 밖에 없는 이유는 terraform은 apply된 실제 인프라에 적용하면서 나온 결과인 tfstate를 환경별로 구분해야 하기때문인데 실제로 코드는 region 정보, backend 설정, 몇몇 변수들이 다르고 나머지 .tf 코드들은 대부분 동일하다.
+이럴 수밖에 없는 이유는 terraform은 apply된 실제 인프라에 적용하면서 나온 결과인 tfstate를 환경별로 구분해야 하기 때문인데 실제로 코드는 region 정보, backend 설정, 몇몇 변수들이 다르고 나머지 .tf 코드들은 대부분 동일하다.
 
-terraform에서는 0.10 버전 부터 0.9에서 *environment*로 사용되던 [workspace](https://www.terraform.io/docs/state/workspaces.html)라는 개념으로 
+terraform에서는 0.10 버전부터 0.9에서 *environment*로 사용되던 [workspace](https://www.terraform.io/docs/state/workspaces.html)라는 개념으로 
 이런 상황에서 하나의 terraform 코드로 여러 환경을 다룰 수 있다.
 ```bash
 $ terraform workspace list  // get all workspaces
@@ -22,8 +22,8 @@ $ terraform workspace select dev // switch workspace
 $ terraform workspace delete prod // delete workspace
 ```
 ```terraform workspace``` 명령을 통해 workspace 생성, 선택, 삭제를 할 수 있다. 
-```terraform workspace list```를 하면 기본적으로 default workspace를 사용하고 있고 default workspace는 삭제 할 수 없다.
-```terraform apply```를 통해 나온 artifact(tfstate)를 workspace라는 개념과 연결 시켜 각 workspace별 tfstate를 관리 할 수 있으므로 다양한 환경에서 하나의 terraform 코드로 관리할 수 있게 해준다.
+```terraform workspace list```를 하면 기본적으로 default workspace를 사용하고 있고 default workspace는 삭제할 수 없다.
+```terraform apply```를 통해 나온 artifact(tfstate)를 workspace라는 개념과 연결해 각 workspace별 tfstate를 관리할 수 있으므로 다양한 환경에서 하나의 terraform 코드로 관리할 수 있게 해준다.
 
 실제로 현업에선 협업을 위해 tfstate를 remote backend로 관리를 하는데 예를 들어 ec2 resource를 생성한다고 해보자.
 ```hcl
@@ -184,8 +184,8 @@ module "ec2" {
   }
 }
 ```
-```${terraform.workspace}```로 현재 workspace를 가져와 local값을 환경에 맞게 주입 시켜 환경 별 다른 region, 다른 설정으로 관리할 수 있다.
-위 예제는 dev, prod 환경을 단일 remote backend로 관리하는 예제로 실제 s3 버킷을 보면 workspace별로 tfstate를 관리 할 수 있다. 
+```${terraform.workspace}```로 현재 workspace를 가져와 local값을 환경에 맞게 주입 시켜 환경 별다른 region, 다른 설정으로 관리할 수 있다.
+위 예제는 dev, prod 환경을 단일 remote backend로 관리하는 예제로 실제 s3 버킷을 보면 workspace별로 tfstate를 관리할 수 있다. 
 ```
 └── env:
     ├── dev
@@ -195,7 +195,7 @@ module "ec2" {
         └── ec2
             └── terraform.tfstate
 ```
-그렇다면 remote state에서 data로 ouput값을 가져올때는 어떻게 가져올 수 있을까?
+그렇다면 remote state에서 data로 ouput값을 가져올 때는 어떻게 가져올 수 있을까?
 ```hcl
 data "terraform_remote_state" "vpc" {
   backend = "s3"
@@ -211,10 +211,10 @@ data "terraform_remote_state" "vpc" {
 ```terraform_remote_state```를 가져올 때 workspace를 명시해주면 각 workspace별 tfstate를 져올 수 있다.
 
 
-> 팀별로 다르겠지만 같은 계정에서 환경을 나눠서 작업하는 경우는 괜찮겠지만 만약 test 계정이 따로 있다면 해당 계정 접근 권한을 열어주어야만 하고, backend 자체가 환경마다 다른 종류를 가진다면 위와 같은 방법으로 tfstate를 관리 할 수 없다.
+> 팀별로 다르겠지만 같은 계정에서 환경을 나눠서 작업하는 경우는 괜찮겠지만 만약 test 계정이 따로 있다면 해당 계정 접근 권한을 열어주어야만 하고, backend 자체가 환경마다 다른 종류를 가진다면 위와 같은 방법으로 tfstate를 관리할 수 없다.
 
 ### Partial Configuration (dynamic backend)
-각 환경 마다 따로 backend를 가지고 workspace마다 환경에 맞는```terraform init```을 통해 state를 가져오고 싶을땐 다음과 같이 3가지 방법이 있다.
+각 환경마다 따로 backend를 가지고 workspace마다 환경에 맞는```terraform init```을 통해 state를 가져오고 싶을 땐 다음과 같이 3가지 방법이 있다.
 - Interactively
 - File
 - Command-line key/value pairs
@@ -287,9 +287,9 @@ $ terraform init -reconfigure -backend-config=prod.tfbackend
 ```
 
 ### co-working with Atlantis
-workspace 개념을 도입하면 하나의 파일로 여러 환경을 관리 할 수 있다는 장점이 있지만 
-기존의 dev, prod 폴더를 나눠 관리 했을 때와는 다르게 그때그때 ```terraform workspace list``` 
-명령으로 현재 workspace를 확인 해야 하고 잘못된 workspac로 plan, apply하는 실수를 범할 수 있고, init 명령도 option을 지정해줘야 하는 불편함이 있다.
+workspace 개념을 도입하면 하나의 파일로 여러 환경을 관리할 수 있다는 장점이 있지만 
+기존의 dev, prod 폴더를 나눠 관리했을 때와는 다르게 그때그때 ```terraform workspace list``` 
+명령으로 현재 workspace를 확인해야 하고 잘못된 workspac로 plan, apply하는 실수를 범할 수 있고, init 명령도 option을 지정해줘야 하는 불편함이 있다.
 이 부분을 Atlantis([Atlantis post](https://chulbuji.gq/terraform-atlantis/))를 활용해 자동화함으로써 좀 더 쉽게 관리할 수 있다.
 
 ```yaml
@@ -333,9 +333,9 @@ workflows:
 각 팀마다 terraform 운영 방식에 따라 다르겠지만 test, dev, prod 환경으로 구분된다면 구성한 terraform을 test에 적용하면서 통과가 되면 
 pr을 통해 atlantis로 dev, prod 환경에서 plan결과 확인 및 코드 리뷰 후 ```atlantis apply``` 명령을 통해 자동으로 infra에 적용하고 pr도 자동으로 close 할 수 있다.
 
-workspace개념을 쓰면서 하나의 파일로 여러 환경을 관리 할 수 있는건 좋지만 
-매번 workspace 변경 및 확인 하는 절차가 귀찮고 실수를 유발하기 쉽다.
+workspace개념을 쓰면서 하나의 파일로 여러 환경을 관리할 수 있는 건 좋지만 
+매번 workspace 변경 및 확인하는 절차가 귀찮고 실수를 유발하기 쉽다.
 이 부분을 atlantis를 활용해 자동화를 하고 리뷰를 좀 더 편하게 할 수 있어 좋은 것 같다.
-하지만 v1에선 프로젝트 단위로 atlantis 설정을 하던게 
-v2가 되면서 하나의 atlantis설정으로 전체를 관리 하는데 매번 pr마다 전체 project plan 결과를 출력하는 이슈가 있다. 덩치가 커지면 느려질 것 같고 원하지 않는 project의 plan 결과를 보는게 불편한데 이 부분은 docs를 좀 더 찾아보고 튜닝을 해야할 것 같다. 
+하지만 v1에선 프로젝트 단위로 atlantis 설정을 하던 게 
+v2가 되면서 하나의 atlantis설정으로 전체를 관리하는데 매번 pr마다 전체 project plan 결과를 출력하는 이슈가 있다. 덩치가 커지면 느려질 것 같고 원하지 않는 project의 plan 결과를 보는 게 불편한데 이 부분은 docs를 좀 더 찾아보고 튜닝을 해야 할 것 같다. 
 
