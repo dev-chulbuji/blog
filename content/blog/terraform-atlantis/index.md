@@ -9,7 +9,7 @@ description: tool to automatically plan & apply Terraform in conjunction with Gi
 
 Atlantis는 pull request 기반으로 terraform plan 결과를 comment로 남겨주거나 지정한 설정으로 plan 및 apply부터 자동으로 pr merge까지 해주는 협업에 도움을 주는 소프트웨어이다. 
 블로그의 첫 글을 읽어보니 atlantis 개발자분이 hashicorp에 입사해 atlantis와 terraform이 더 협력할 수 있는 프로젝트를 진행한다는 사실을 알게 되었다. 앞으로 terraform으로 IaaC를 하면서 더 많은 기능들이 추가될 것 같다. 
-atlantis는 사실 삼성전자의 송주영 선임분께서 aws 소모임에서 삼성전자 devops팀 이야기를 하실 때, lightning talk시간에 terraform 협업 관련해서 이것저것 조언을 구하다가 소개받은 툴이다.
+atlantis는 사실 삼성전자의 [송주영](https://www.facebook.com/juyoung.song.79?__tn__=%2CdC-R-R&eid=ARAH253PXi1IUAZXbsrtvZcvJntCda92qaiiAnqvdOwyrWkHdm_i_9YlRvGS9t4RnffNeYxmjEE-zzug&hc_ref=ARTdjIUwQIvkKFEXuH_g2SRxthQcsgm_4o8HPNdFY4KpP3fg5XJOVNZhsrYxqjEM3KU&fref=nf) 선임분께서 aws 소모임에서 삼성전자 devops팀 이야기를 하실 때, lightning talk시간에 terraform 협업 관련해서 이것저것 조언을 구하다가 소개받은 툴이다.
 말 그대로 pull request를 hooking해 마치 자동 빌드 테스트 형태로 terraform plan을 해주고 결과를 pr comment로 보여주면서 reviewer가 직접 plan 결과를 실행하지 않고 바로 확인할 수 있도록 해준다. 뿐만아니라 automerge 설정을 하면 모든 plan이 통과됐을 때 자동으로 pr을 merge하는 기능도 있다.
 
 
