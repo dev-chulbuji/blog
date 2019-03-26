@@ -40,9 +40,71 @@ master node는 api server, scheduler, etcd, controller manager 총 4개의 요�
 
 ### kubernetes master node — api server
 
-![kubernetes master node api server](https://cdn-images-1.medium.com/max/800/1*E7a2ZT3UlURRVfVpd_PVZA.png)*kubernetes master node api server*
+![kubernetes master node api server](./images/api_server_01.jpg)
 
-master node의 api sever는 kubernetes rest api 제공하는 역할을 하며 kubernetes cli 도구인 kubectl로 들어오는 명령과 rest api call에 의한 request를 받아서 worker node(kublet)들에게 req를 전달하는 역할을 한다.
+master node의 api sever는 cluster 상태를 수정 및 조회할 수 있는 interface를 제공한다. 뿐만 아니라 인증/인가 및 요청된 object의 유효성 검사를 수행한다.
+kubernetes 1.6버전 이전까지는 etcd2를 사용하여 optimistic locking을 지원했고 그 이후론 etcd3을 사용해 tx를 지원한다. 
+```go
+# etcd2
+
+// CompareResourceVersion compares etcd resource versions.  Outside this API they are all strings,
+// but etcd resource versions are special, they're actually ints, so we can easily compare them.
+func (a APIObjectVersioner) CompareResourceVersion(lhs, rhs runtime.Object) int {
+	lhsVersion, err := Versioner.ObjectResourceVersion(lhs)
+	if err != nil {
+		// coder error
+		panic(err)
+	}
+	rhsVersion, err := Versioner.ObjectResourceVersion(rhs)
+	if err != nil {
+		// coder error
+		panic(err)
+	}
+
+	if lhsVersion == rhsVersion {
+		return 0
+	}
+	if lhsVersion < rhsVersion {
+		return -1
+	}
+
+	return 1
+}
+
+
+---
+
+
+# etcd3
+
+// GuaranteedUpdate implements storage.Interface.GuaranteedUpdate.
+func (s *store) GuaranteedUpdate(
+	ctx context.Context, key string, out runtime.Object, ignoreNotFound bool,
+	preconditions *storage.Preconditions, tryUpdate storage.UpdateFunc, suggestion ...runtime.Object) error {
+
+  ...
+
+  trace.Step("Transaction prepared")
+
+  txnResp, err := s.client.KV.Txn(ctx).If(
+    clientv3.Compare(clientv3.ModRevision(key), "=", origState.rev),
+  ).Then(
+    clientv3.OpPut(key, string(newData), opts...),
+  ).Else(
+    clientv3.OpGet(key),
+  ).Commit()
+  if err != nil {
+    return err
+  }
+  trace.Step("Transaction committed")
+
+  ...
+
+}
+```
+Kubernetes의 component들은 api server에게 watch api(```--watch```)를 통해 connection을 유지하여 변경된 resource version을 subscribe한다.
+가령 client(kubectl)에 의해 resource 변경이 생겼을 경우 etcd는 resource를 새로운 version으로 저장을 하고 key값을 api server에게 publish한다. api server는 watch api로 listening 하고 있는 component들에게 resource의 새로운 버전을 publish함으로써 component들은 resource 변화를 통지 받을 수 있고 그에 맞게 동작할 수 있다.
+```--watch``` api는 http1.0, http1.1을 사용하는데 http1.0의 경우 응답의 일부만 전달하여 connection을 유지하고 http1.1에서는 chunked stream을 통해 connection을 유지한다.
 
 ### kubernetes master node — scheduler
 
